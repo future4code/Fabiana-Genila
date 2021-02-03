@@ -1,3 +1,8 @@
+* {
+  margin:0;
+  padding:0;
+}
+
 #titulo-principal {
   color: #4e7b84;
   text-align: left;
@@ -25,27 +30,24 @@ body {
 .box-img {
   border: 1px ;
   width: 100%; 
-  display: inline-block; 
-  padding: 1px;
-  margin-top: 1px;
   box-sizing: border-box;
   text-align: left;
   background-image: linear-gradient(to right, white, aquamarine);
+  position: relative;
+  top: auto;
   
 }
 
 h1 {
-  width: 30%;
   display: inline-block;
   box-sizing:border-box;
+  text-align: center;
 }
-
 
 h2 {
-  width: 30%;
-  display: inline-block;
-  box-sizing:border-box;
-}
+  margin: 30px;
+  text-align: center;
+  }
 
 td {
   text-align: center;
@@ -74,11 +76,31 @@ td {
 .footer {
   border: 1px ;
   width: 100%; 
-  display: inline-block; 
-  padding: 1px;
-  margin-top: 50px;
-  margin-bottom: 1px;
   box-sizing: border-box;
-  text-align: center;
+  text-align: left;
   background-image: linear-gradient(to right, pink, aquamarine);
+  position: fixed;
+  bottom: 0;
+  left: 0%;
+}
+
+table {
+    margin: auto;
+    width: 50%;
+    text-align: center;
+    background-color: white;
+}
+
+div {
+    margin: auto;
+    width: 100%;
+    text-align: center;
+}
+
+th {
+    background-color: cornflowerblue;
+}
+
+tr:nth-of-type(2n+1) {
+    background-color: aquamarine;
 }
