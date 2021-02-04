@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>Adicionar Produto</title>
+</head>
+<body>
+    <header>
+        <div class="box-img">
+            <img src="./img/logo.png" alt="logo" height="150">
+            <h1 id="titulo-principal">Bem-vind@ ao <em>SuperPC</em>!</h1>
+        </div>
+    </header>
+    
+    <div class="navegador">
+        <a href="./index.html">Página Inicial</a>
+        <a href="./ctrl-estoque.html">Controle de Estoque</a>
+        <a href="./add-produto.html">Adicionar Produto</a>
+        <a href="./funcionarios.html">Funcionários</a>
+    </div>
+    <br>
+    <h2>Visualizar venda</h2>
+    <form action="">
+        <div>
+            <p>Produto:</p>
+            <select name="produto">
+                <option value="placa-mae" selected>Placa mãe para PC Gamer</option>
+                <option value="SDD">SDD para armazanamento de dados de 1TB</option>
+                <option value="memoria">Placa de memória DDR4 para PC 8GB</option>
+                <option value="monitor">Monitor para PC 25"</option>
+                <option value="teclado">Teclado ABNT para computador</option>
+            </select>
+        </div>
+        <br>
+        <div>
+            <label for="data-venda">Data:</label>
+            <input type="data" id="data-venda" name="data-venda" value="03/02/2021" min="01/01/2021" max="31/12/2021">
+        </div>
+<br>
+    </form>
+        <div class="form-add">
+            <button type="button" class="button">Procurar venda</button>
+        </div>
+
+    </form>
+    <br>
+<div>
+    <table>
+        <tr>
+                    <th>Produto</th>
+                    <th>Total da compra (em R$)</th>
+                    <th>Data da venda</th>
+                    <th>Pagamento</th>
+                    <th>Vendedor</th>
+                </tr>
+        
+                <tr>
+                    <td> Placa mãe para PC Gamer </td>
+                    <td> R$ 1.200,00 </td>
+                    <td>03/01/2021</td>
+                    <td>dinheiro</td>
+                    <td>Wagner de Lima</td>
+                </tr>
+        
+                <tr>
+                    <td> SDD para armazanamento de dados de 1TB </td>
+                    <td> R$ 749,00 </td>
+                    <td>03/01/2021</td>
+                    <td>dinheiro</td>
+                    <td>Wagner de Lima</td>
+                </tr>
+                
+            </table>
+</div>
+<br>
+    <div class="footer">
+        <p>Siga-nos nas redes sociais!</p>
+        <div>
+            <img src="https://image.flaticon.com/icons/png/512/25/25305.png" height="50" />
+            <img src="https://image.flaticon.com/icons/png/512/25/25425.png" height="50" />
+            <img src="https://image.flaticon.com/icons/png/512/8/8800.png" height="50" />
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>Adicionar Produto</title>
+</head>
+<body>
+    <header>
+        <div class="box-img">
+            <img src="./img/logo.png" alt="logo" height="150">
+            <h1 id="titulo-principal">Bem-vind@ ao <em>SuperPC</em>!</h1>
+        </div>
+    </header>
+    
+    <div class="navegador">
+        <a href="./index.html">Página Inicial</a>
+        <a href="./ctrl-estoque.html">Controle de Estoque</a>
+        <a href="./add-produto.html">Adicionar Produto</a>
+        <a href="./funcionarios.html">Funcionários</a>
+    </div>
+
+    
+    <h2>Adicionar venda</h2>
+    <form action="">
+        <div>
+            <label for="produto">Produto: </label>
+            <input type="text" id="produto" name="produto">
+        </div>
+<br>        
+        <div>
+            <label for="quantidade">Quantidade: </label>
+            <input type="text" id="quantidade" name="quantidade">
+        </div>
+        <br>
+        <div>
+            <label for="preco">Preço (em R$): </label>
+            <input type="preco" id="preco" name="preco">
+        </div>
+        <br>
+        <div>
+            <button type="button" class="button">Adicionar produtos</button>
+        </div>
+    </form>
+
+<table>
+<tr>
+            <th>Foto</th>
+            <th>Descrição</th>
+            <th>Preço (R$)</th>
+            <th>Quantidade</th>
+        </tr>
+
+        <tr>
+            <td class="table-data"><img src="./img/placamae.jpg" alt="Placa Mãe" height="50"/></td>
+            <td> Placa mãe para PC Gamer </td>
+            <td> R$ 1.200,00 </td>
+            <td> 05 </td>
+        </tr>
+
+        <tr>
+            <td><img src="./img/sdd.jpeg" alt="Armazanamento SSD" height="50"/></td>
+            <td> SDD para armazanamento de dados de 1TB </td>
+            <td> R$ 749,00 </td>
+            <td> 03 </td>
+        </tr>
+
+        <tr>
+            <td><img src="./img/teclado.jpg" alt="Teclado" height="50"/></td>
+            <td> Teclado ABNT para computador </td>
+            <td> R$ 100,00 </td>
+            <td> 02 </td>
+        </tr>
+
+        <tr>
+            <td><img src="./img/monitor.png" alt="Monitor" height="50"/></td>
+            <td> Monitor para PC 25" </td>
+            <td> R$ 620,00 </td>
+            <td> 07 </td>
+        </tr>
+
+        <tr>
+            <td><img src="./img/memoria.png" alt="Memória DDR4 1TB" height="50"/></td>
+            <td> Placa de memória DDR4 para PC 8GB</td>
+            <td> R$ 350,00</td>
+            <td> 05 </td>
+        </tr>
+    </table>
+
+        <div>
+            <p>Vendedor:</p>
+            <select name="vendedor">
+                <option value="vendedor-wagner" selected>Wagner de Lima</option>
+                <option value="vendedor-fabi">Fabiana Pereira</option>
+                <option value="vendedor-maria-ed">Maria Eduarda</option>
+            </select>
+        </div>
+        <br>
+        <div>
+            <select name="pagamento">
+                <option value="dinheiro" selected>Pagamento à vista (dinheiro)</option>
+                <option value="cartão">Pagamento em cartão</option>
+            </select>
+        </div>
+        <br>
+        <div class="form-add">
+            <button type="button" class="button">Adicionar total venda</button>
+        </div>
+
+    </form>
+
+    <div class="footer">
+        <p>Siga-nos nas redes sociais!</p>
+        <div>
+            <img src="https://image.flaticon.com/icons/png/512/25/25305.png" height="50" />
+            <img src="https://image.flaticon.com/icons/png/512/25/25425.png" height="50" />
+            <img src="https://image.flaticon.com/icons/png/512/8/8800.png" height="50" />
+        </div>
+    </div>
+
+</body>
+</html>
