@@ -6,25 +6,35 @@
     margin: 0;
     padding: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    background-color: #c0c5ce;
+    background-color: #ffffff;
+    background-image:url("img/5.jpg")
   }
   
-  /* Style the header */
-  .header {
-    background-color: white;
-    padding: 20px;
-    text-align: left;
-    color: #343d46;
-  }
+p, h3 {
+  color:#343d46;
+}
+
+.frase {
+  color:#343d46;
+  padding: 50px;
+  margin-top:30px;
+
+}
+
+li {
+  list-style: none;
+}
   
-  /* Style the top navigation bar */
+  /* Estilo do top navegador */
   .topnav {
     overflow: hidden;
     background-color: white;
-    border-bottom: #343d46 solid 3px;
+    border-bottom: #343d46 dotted 3px;
+    border-top:#343d46 solid 2px;
+    background-image:url();
   }
   
-  /* Style the topnav links */
+  /* Estilo do top navegador */
   .topnav a {
     float: right;
     display: block;
@@ -34,20 +44,21 @@
     text-decoration: none;
   }
   
-  /* Change color on hover */
   .topnav a:hover {
     background-color: #343d46;
     color: white;
   }
   
-  /* Create three equal columns that floats next to each other */
+  /* Cria tres colunas iguais flutuantes um do lado do outro */
   .column {
     float: left;
     width: 33.33%;
-    padding: 15px;
+    padding: 40px;
+    border-radius: 15px;
   }
+
   
-  /* Clear floats after the columns */
+  /* Limpa os floats depois das colunas */
   .row:after {
     content: "";
     display: table;
@@ -55,5 +66,64 @@
   }
 
 .row {
-    font-size: 20px;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    text-align: center;
 }
+
+
+/* Estilo imagens de trabalhos*/
+img {
+  border-radius: 8px;
+}
+
+.box:hover {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  animation-name: example;
+  animation-duration: 0.25s;
+  border-left: 8px solid #343d46;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+button:hover {
+  border-right: 2px solid black;
+}
+
+
+@keyframes example {
+    0%   {border-left: 2px solid #a7adba;}
+    25%  {border-left: 3px solid #65737e;}
+    50%  {border-left: 4px solid #4f5b66;}
+    100% {border-left: 5px solid #343d46;}
+}
+
+/* Estilo do form */
+  input, textarea {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    text-align: left;
+    outline: none;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    resize: none;
+    background-color: lightblue;
+
+  }
+
+  input[type=submit] {
+    width: 100%;
+    background-color: #343d46;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  input[type=submit]:hover {
+    background-color: #65737e;
+  }
