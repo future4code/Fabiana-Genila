@@ -105,18 +105,59 @@ function verificaNumeros (a, b) {
 
 //c. Faça uma função que recebe uma mensagem (string) como parâmetro e imprima essa mensagem 10 vezes. (não é permitido escrever 10 console.log dentro da função, use outra estrutura de código para isso)
 
-function mensagem (animal) {
-    
-    while 
+let imprimaMensagem = (animal) => {
+
+  for(var i = 0; i < 10 ; i++) {
+    console.log (animal)
+  }
 }
+
+imprimaMensagem('gato')
 
 //EXERCICIO 6
 //a. Escreva uma função que receba um array de números e devolva a quantidade de elementos nele
 
+const verificaTamanhoDoArray = (arrayDeParametro) => {
+  
+  console.log(arrayDeParametro.length)
+}
+
+const numeros = [1, 2, 3, 4, 5]
+
+const tamanhoDoArray = verificaTamanhoDoArray(numeros)
+
 
 //b. Escreva uma função que receba um número e devolva um booleano indicando se ele é par ou não
 
+function verificaNumeros (a) {
+  let numero = a
+  if (numero % 2 === 0) {
+    
+      console.log(numero, 'é número par')
+    
+  } else {
+    
+      console.log(numero, 'não é número par')
+  }
+}
+
+verificaNumeros(10)
+
 
 //c. Escreva uma função que receba um array de números e devolva a quantidade de números pares dentro dele
+
+const verificaTamanhoDoArray = (arrayDeParametro) => {
+  
+  if (numeros % 2 === 0) {
+    
+    console.log(numeros)
+  
+}
+return arrayDeParametro
+  
+}
+
+const numeros = [1, 2, 3, 4, 5]
+
 
 //d. Reescreva seu código anterior (do item c) de tal forma que ele utilize a função do item b para verificar se o número é par
