@@ -7,13 +7,15 @@ import iconeCoracaoBranco from '../../img/favorite-white.svg'
 import iconeCoracaoPreto from '../../img/favorite.svg'
 import iconeComentario from '../../img/comment_icon.svg'
 import {SecaoComentario} from '../SecaoComentario/SecaoComentario'
+import { render } from '@testing-library/react'
 
 class Post extends React.Component {
   state = {
     curtido: false, //sem curtidas, coração branco
     numeroCurtidas: 0,
     comentando: false,
-    numeroComentarios: 0
+    numeroComentarios: 0,
+    listaDeComentarios: false
   }
 
   onClickCurtida = () => {
@@ -31,7 +33,6 @@ class Post extends React.Component {
     })
 
   }
-
 
   onClickComentario = () => {
     this.setState({
