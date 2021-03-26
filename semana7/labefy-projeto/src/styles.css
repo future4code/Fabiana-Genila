@@ -1,0 +1,53 @@
+body {
+  margin: 0px;
+  }
+
+
+.App {
+  /* width: 100vw;
+  height: 100vh; */
+  height: 500px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center 
+}
+
+.App-header {
+  background-color: blue;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  padding-left: 90%;
+  /* justify-content: space-evenly; */
+  align-items: center;
+  width: 100%;
+  
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.App-main {
+  width: 600px;
+  height: 500px;
+  background: #fff;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  margin-top: 60px;
+  
+}
+
+.Titulo {
+float: center;
+}
+
+.Botao {
+float:right;
+margin-left: 30%;
+}
