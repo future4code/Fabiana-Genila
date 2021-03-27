@@ -23,7 +23,7 @@ export default class App extends React.Component {
       case "criarPlaylist":
         return <CriarPaginaPlaylist />
       case "listaPlaylist":
-        return <ListaPlaylist changePage={this.mudarPagina} />
+        return <ListaPlaylist mudarPagina={this.mudarPagina} />
       default:
         return (
           <div>
@@ -39,9 +39,10 @@ export default class App extends React.Component {
       <div className="App">
         <div className="App-header">
         <div className="Titulo">
+        <img src="https://cdn1.iconfinder.com/data/icons/google_jfk_icons_by_carlosjj/512/music.png" alt="" />
         <h1>Labefy</h1>
         </div>
-          <button className="Botao" onClick={this.mudarPagina}>Trocar de página</button>
+          <button className="Botao" onClick={this.mudarPagina}>Ver playlist</button>
           </div>
         <div className="App-main">
           <div className="ContainerSearch">
