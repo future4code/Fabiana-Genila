@@ -1,0 +1,82 @@
+body {
+  margin: 0px;
+  background-image: radial-gradient(#212121 5%, transparent 5%),
+  radial-gradient(#fafafa 5%, transparent 5%);
+  background-color: rgb(235, 193, 193);
+  background-position: 0 0, 50px 50px;
+  background-size: 100px 100px;
+  }
+
+
+.App {
+  height: 500px;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: radial-gradient(#212121 5%, transparent 5%),
+  radial-gradient(#fafafa 5%, transparent 5%);
+  background-color: rgb(235, 193, 193);
+  background-position: 0 0, 50px 50px;
+  background-size: 100px 100px;
+}
+
+.App-header {
+  background-color: lightyellow;
+  border-bottom:lightslategrey;
+  border: 1px solid rgb(153, 139, 119);
+  box-shadow: 2px 2px 4px #000000;
+  color: black;
+  display: flex;
+  flex-direction: row;
+  padding-left: 90%;
+  align-items: center;
+  width: 100%;
+  height: 100%;  
+}
+
+.App-main {
+  width: 600px;
+  height: 600px;
+  background: #fff;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid lightslategrey;
+  border-radius: 10px;
+  margin-top: 30px;
+  padding-bottom: 10px;
+  
+  
+}
+
+.Titulo {
+float: center;
+}
+
+button {
+margin-left: 30%;
+color: black;
+background-color: lightsteelblue;
+border-radius: 10px;
+padding: 10px;
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+}
+
+input {
+  border: 2px solid rgb(170, 170, 241);
+  padding: 10px;
+  border-radius: 10px;
+}
+
+img {
+  height: 100px;
+  width: 100px;
+  float: left;
+
+}
