@@ -29,7 +29,7 @@ export default class RegistroUsuario extends React.Component {
     }
 
 
-criarPlaylist = () => {
+salvarUsuario = () => {
     const body = {
         name: this.state.inputNome,
         email: this.state.inputEmail
@@ -71,15 +71,10 @@ render() {
             value={this.state.inputEmail}
             onChange={this.handleInputEmail}
           />
-          <button onClick={this.criarPlaylist}>Enviar</button>
+          <button onClick={this.salvarUsuario}>Enviar</button>
         </RegistroUsuarios>
-        <div>
-          <button onClick={<ListaUsuario />}>
-            Ir para lista de usuários
-          </button>
-        </div>
       </div>
-    );
+    )
 }
 }
 
