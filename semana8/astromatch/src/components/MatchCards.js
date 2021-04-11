@@ -21,6 +21,7 @@ const MatchCards = () => {
           }
           getProfileToChoose()
     }, [setProfile])
+    
 
     return(
         <div className="Match-container">
