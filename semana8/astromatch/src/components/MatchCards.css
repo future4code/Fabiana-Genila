@@ -1,0 +1,42 @@
+.Match-container {
+    display:flex;
+    /* justify-content:center;
+    align-items: center; */
+    flex-direction:column;
+}
+
+.Match-image {
+    object-fit: cover;
+    width: 350px;
+    height: 450px;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.Match-name {
+    color: black;
+    padding: 10px 0;
+}
+
+.Match-bio {
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    padding: 10px 0;
+}
+
+.Match-buttons {
+    display: flex;
+    bottom: 10vh;
+    width: 100%;
+    margin-top: 10px;
+    justify-content: space-evenly;
+    align-content: center;
+    padding: 10px 0;
+}
+
+.Match-buttons .MuiIconButton-root {
+    background-color: lightgray;
+    box-shadow: 0px 10px 53px 0px rgba(0, 0, 0, 0.3) !important 
+}
