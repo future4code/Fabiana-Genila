@@ -1,5 +1,5 @@
 export const goToAdminHomePage = (history) => {
-    history.push("/admin-home-page")
+    history.push("/admin/trips/list")
 }
 
 export const goToApplicationFormPage = (history) => {
@@ -7,7 +7,7 @@ export const goToApplicationFormPage = (history) => {
 }
 
 export const goToCreateTripPage = (history) => {
-    history.push("/create-trip-page")
+    history.push("/admin/trips/create")
 }
 
 export const goToListTripsPage = (history) => {
@@ -19,7 +19,7 @@ export const goToLoginPage = (history) => {
 }
 
 export const goToTripDetailsPage = (history) => {
-    history.push("/trip-details-page")
+    history.push("/admin/trips/:id")
 }
 
 export const goToLastPage = (history) => {

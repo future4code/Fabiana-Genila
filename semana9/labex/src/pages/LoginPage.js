@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import axios from 'axios'
 import { useHistory } from 'react-router-dom'
+import useProtectedPage from '../hooks/useProtectedPage'
 import { goToAdminHomePage, goToHomePage, goToLastPage, goToLoginPage } from '../routes/coordinator'
 
 //Para fazermos login como administrador
@@ -87,7 +89,39 @@ const AdminLoginParagraph = styled.p`
 `
 
 const LoginPage = () => {
+    useProtectedPage()
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
     const history = useHistory()
+
+    const handleEmail = (e) => {
+        setEmail(e.target.value)
+    }
+
+    const handlePassword = (e) => {
+        setPassword(e.target.value)
+    }
+
+    const login = () => {
+        const body = {
+            email: email,
+            password: password
+        }
+
+        axios 
+            .post(
+                "https://us-central1-labenu-apis.cloudfunctions.net/labeX/fabiana-pereira-cruz/login",
+                body
+            )
+            .then((res) => {
+                console.log(res.data)
+                window.localStorage.setItem('token', res.data.token)
+                history.push('/admin/trips/list')
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
 
     return(
         <HomePageContainer>
@@ -102,10 +136,11 @@ const LoginPage = () => {
             <LoginContainer>
                 <InputAdminContainer>
                     <AdminLoginParagraph>Área Exclusiva</AdminLoginParagraph>
-                    <InputAdmin type="email" placeholder="Digite seu e-mail" />
-                    <InputAdmin type="password" placeholder="Digite sua senha"/>
+                    <InputAdmin value={email} onChange={handleEmail} type="email" placeholder="Digite seu e-mail" />
+                    <InputAdmin value={password} onChange={handlePassword} type="password" placeholder="Digite sua senha"/>
                         <div>
-                            <LabeXButton onClick={() => goToAdminHomePage(history)}>Entrar</LabeXButton>
+                            {/* <LabeXButton onClick={() => goToAdminHomePage(history)} >Entrar</LabeXButton> */}
+                            <LabeXButton onClick={login}>Entrar</LabeXButton>
                             <LabeXButton onClick={() => goToLastPage(history)}>Voltar</LabeXButton>
                         </div>
                 </InputAdminContainer>

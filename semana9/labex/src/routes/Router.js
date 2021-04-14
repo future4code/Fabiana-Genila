@@ -12,7 +12,7 @@ const Router = () => {
     return (
         <BrowserRouter>
         <Switch>
-            <Route exact path="/admin-home-page">
+            <Route exact path="/admin/trips/list">
                 <AdminHomePage />
             </Route>
 
@@ -20,7 +20,7 @@ const Router = () => {
                 <ApplicationFormPage />
             </Route>
 
-            <Route exact path="/create-trip-page">
+            <Route exact path="/admin/trips/create">
                 <CreateTripPage />
             </Route>
 
@@ -32,7 +32,7 @@ const Router = () => {
                 <LoginPage />
             </Route>
 
-            <Route exact path='/trip-details-page'>
+            <Route exact path="/admin/trips/:id">
                 <TripDetailsPage />
             </Route>
 
