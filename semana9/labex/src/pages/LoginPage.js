@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 import useProtectedPage from '../hooks/useProtectedPage'
+import useForm from '../hooks//useForm'
 import { goToAdminHomePage, goToHomePage, goToLastPage, goToLoginPage } from '../routes/coordinator'
 
 //Para fazermos login como administrador
@@ -87,19 +88,29 @@ const AdminLoginParagraph = styled.p`
     color: #db7f32;
     font-weight: bold;
 `
+// const initialForm = {
+//     email: "",
+//     password: ""
+// }
 
 const LoginPage = () => {
     useProtectedPage()
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+    const [email, onChangeEmail] = useForm("")
+    const [password, onChangePassword] = useForm("")
     const history = useHistory()
 
-    const handleEmail = (e) => {
-        setEmail(e.target.value)
-    }
+    // const [form, onChange, resetForm] = useForm(initialForm)
 
-    const handlePassword = (e) => {
-        setPassword(e.target.value)
+    // const handleEmail = (e) => {
+    //     setEmail(e.target.value)
+    // }
+
+    // const handlePassword = (e) => {
+    //     setPassword(e.target.value)
+    // }
+
+    const onSubmitForm = (e) => {
+        e.preventDefault()
     }
 
     const login = () => {
@@ -136,13 +147,33 @@ const LoginPage = () => {
             <LoginContainer>
                 <InputAdminContainer>
                     <AdminLoginParagraph>Área Exclusiva</AdminLoginParagraph>
-                    <InputAdmin value={email} onChange={handleEmail} type="email" placeholder="Digite seu e-mail" />
-                    <InputAdmin value={password} onChange={handlePassword} type="password" placeholder="Digite sua senha"/>
+                    <form onSubmit={onSubmitForm}>
+                    <InputAdmin 
+                    required
+                    title={"e-mail incorreto"}
+                    // value={form.email}
+                    value={email} 
+                    // onChange={handleEmail} 
+                    onChange={onChangeEmail}
+                    type={"email"} 
+                    placeholder={"Digite seu e-mail"}
+                    pattern={"[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$"}
+                    />
+                    <InputAdmin 
+                    required
+                    title={"A senha deve conter pelo menos 3 caracteres"}
+                    value={password} 
+                    onChange={onChangePassword} 
+                    type={"password"} 
+                    placeholder={"Digite sua senha"}
+                    pattern={"\\w{3,}"}
+                    />
                         <div>
                             {/* <LabeXButton onClick={() => goToAdminHomePage(history)} >Entrar</LabeXButton> */}
                             <LabeXButton onClick={login}>Entrar</LabeXButton>
                             <LabeXButton onClick={() => goToLastPage(history)}>Voltar</LabeXButton>
                         </div>
+                    </form>
                 </InputAdminContainer>
             </LoginContainer>
         </HomePageContainer>

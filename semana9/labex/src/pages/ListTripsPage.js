@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
-import { useHistory, useParams } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { goToApplicationFormPage, goToHomePage } from '../routes/coordinator'
 
 //Para vermos todas as viagens
@@ -17,11 +17,10 @@ const HeaderContainer = styled.header`
 `
 
 const ListTripsPage = () => {
-    const [trip, setTrip] = useState({})
-    const params = useParams()
+    const [listTrips, setListTrips] = useState({})
     const history = useHistory()
 
-    useEffect(() =>{
+    useEffect(() => {
         getTrips()
     },[])
 
@@ -30,13 +29,12 @@ const ListTripsPage = () => {
         axios
             .get("https://us-central1-labenu-apis.cloudfunctions.net/labeX/fabiana-pereira-cruz/trips")
             .then((res) => {
-                setTrip(res.data.trips)
+                setListTrips(res.data.trips)
             })
             .catch((err) => {
                 console.log(err)
-            })
-            console.log(trip)
-    }
+            })            
+    } 
 
     return(
         <div>
@@ -45,7 +43,19 @@ const ListTripsPage = () => {
             </HeaderContainer>
             <p>List Trips Page</p>
             <p>Trip Cards</p>
-            <p></p>
+            {listTrips.trips && listTrips.trips.map ((trip) => {
+                console.log(trip.name)
+                return (
+                <div key={trip.id}>
+                    <h2>{trip.name}</h2>
+                    <p>{trip.planet}</p>
+                    <p>{trip.description}</p>
+                    <p>{trip.date}</p>
+                    <p>{trip.durationInDays}</p>
+                </div>
+                )
+            } 
+            )}
             <button onClick={() => goToApplicationFormPage(history)}>Sign up to travel!</button>
             <button onClick={() => goToHomePage(history)}>Home Page</button>
         </div>
@@ -53,3 +63,15 @@ const ListTripsPage = () => {
 }
 
 export default ListTripsPage
+
+// const meuObjeto = {
+//     nome: 'Textinho',
+//     idade: 10,
+//     hobies: ['hobie1', 'hobie2', 'hobie3']
+//   }
+//   //acessando
+//   meuObjeto.nome
+//   meuObjeto.idade
+//   meuObjeto.hobies // <= isso eh um array, um lista
+//   meuObjeto.hobies.map(hobie => <p>hobie</p>) //faz um map normal assim
+  
