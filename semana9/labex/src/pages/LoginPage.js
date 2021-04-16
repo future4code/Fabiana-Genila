@@ -4,7 +4,7 @@ import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 import useProtectedPage from '../hooks/useProtectedPage'
 import useForm from '../hooks//useForm'
-import { goToAdminHomePage, goToHomePage, goToLastPage, goToLoginPage } from '../routes/coordinator'
+import { goToLastPage } from '../routes/coordinator'
 
 //Para fazermos login como administrador
 
@@ -98,16 +98,6 @@ const LoginPage = () => {
     const [email, onChangeEmail] = useForm("")
     const [password, onChangePassword] = useForm("")
     const history = useHistory()
-
-    // const [form, onChange, resetForm] = useForm(initialForm)
-
-    // const handleEmail = (e) => {
-    //     setEmail(e.target.value)
-    // }
-
-    // const handlePassword = (e) => {
-    //     setPassword(e.target.value)
-    // }
 
     const onSubmitForm = (e) => {
         e.preventDefault()

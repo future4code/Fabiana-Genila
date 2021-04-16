@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useHistory, useParams } from 'react-router-dom'
 import axios from 'axios'
-import { goToHomePage, goToLastPage } from '../routes/coordinator'
+import { goToLastPage } from '../routes/coordinator'
 import useProtectedPage from '../hooks/useProtectedPage'
 
 
@@ -21,31 +21,31 @@ const HeaderContainer = styled.header`
 
 const TripDetailsPage = () => {
     useProtectedPage()
-    const [trip, setTrip] = useState({})
-    const params = useParams()
+    const [tripDetails, setTripDetails] = useState({})
+    const { id } = useParams()
     const history = useHistory()
-    
-    console.log(params)
 
     useEffect(() =>{
-        getTripDetail("NoIFVcOiSgTKTIPVZwXS")
+        getTripDetail()
     },[])
 
-    const getTripDetail = (id) => {
+    const getTripDetail = () => {
         const token = window.localStorage.getItem("token")
 
         axios
-            .get(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/fabiana-pereira-cruz/trip/${id}`, {
+            .get(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/fabiana-pereira-cruz/trip/${id}`, 
+            {
                 headers: {
                     auth: token
                     }
                 }
             )
             .then((res) => {
-                setTrip(res.data.trip)
+                setTripDetails(res.data.trip)
+                history.push('/admin/trips/list')
             })
             .catch((err) => {
-                console.log(err)
+                console.log(err.response.message)
             })
     }
 
@@ -54,23 +54,40 @@ const TripDetailsPage = () => {
         history.push("/login-page")
     }
 
+    const candidates = tripDetails && 
+    tripDetails.trip && tripDetails.trip.candidates.map((candidate) => {
+        return <div key={candidate.id}>{candidate}{id}{getTripDetail}</div>
+    })
+
+    const approvedCandidates = tripDetails && 
+    tripDetails.trip && tripDetails.trip.approved.map((candidate) => {
+        return <li key={candidate.id}>{candidate.name}</li>
+    })
+
     return(
         <div>
             <HeaderContainer>
             LabeX
             </HeaderContainer>
-            <p>Trip Details Page</p>
-            <p>Trip Cards</p>
-            <p>Approval Candidates Cards</p>
-            <h2>{trip.name}</h2>
-            <p>{trip.date}</p>
-            <p>{trip.description}</p>
-            <button>Approved!</button>
-            <button>Desapproved!</button>
-            <p>Desapproval Candidates Cards</p>
-            <button onClick={logout}>Logout</button>
-            <button onClick={() => goToHomePage(history)}>Home Page</button>
+            {tripDetails && tripDetails.trip && <h1>{tripDetails.trip.name}</h1>}
+            {tripDetails && tripDetails.trip && <div>
+                <p><b>Nome:</b> {tripDetails.trip.name}</p>
+                <p><b>Descrição:</b> {tripDetails.trip.description}</p>
+                <p><b>Planeta:</b> {tripDetails.trip.planet}</p>
+                <p><b>Duração:</b> {tripDetails.trip.durationInDays}</p>
+                <p><b>Data:</b> {tripDetails.trip.date}</p>
+            </div>}
             <button onClick={() => goToLastPage(history)}>Voltar</button>
+            <button onClick={logout}>Logout</button>
+
+            <h2>Candidatos Aprovados</h2>
+            {approvedCandidates && approvedCandidates.length > 0 ? 
+                approvedCandidates : <p>Não há candidatos aprovados</p>}
+
+            <h2>Candidatos Pendentes</h2>
+            {candidates && candidates.length > 0 ? 
+                candidates : <p>Não há candidatos pendentes</p>}
+           
         </div>
     )
 }

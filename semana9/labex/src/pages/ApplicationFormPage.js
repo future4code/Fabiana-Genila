@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 import { goToHomePage, goToLastPage } from '../routes/coordinator'
 import useForm from '../hooks/useForm'
+import { countries } from '../constants/countries'
 
 //Para o usuário se candidatar à viagens, página que vai ter o formulário de inscrição
 
@@ -16,92 +17,180 @@ const HeaderContainer = styled.header`
     padding: 20px;
     border-bottom: 1px solid orange;
 `
+const FormContainer = styled.form`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: left;
+padding: 8px;
+width: 500px;
+`
+const InputForm = styled.input`
+    padding: 8px;
+    margin: 4px;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid;
+    background-color: #f2e4c9;
+`
+const SelectForm = styled.select`
+    padding: 8px;
+    margin: 4px;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid;
+    background-color: #f2e4c9;
+`
+const ApplicationFormParagraph = styled.p`
+    margin: 10px;
+    padding: 10px;
+    font-size: 18px;
+`
+const LabeXButton = styled.button`
+    background-color: orange;
+    color: white;
+    font-size: 16px;
+    padding: 10px;
+    margin-left: 60px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+`
 
 const ApplicationFormPage = () => {
+    const [listTrips, setListTrips] = useState({})
+    const [tripId, setTripId] = useState("")
     const [name, onChangeName] = useForm("")
-    const [planet, onChangePlanet] = useForm("")
-    const [date, onChangeDate] = useForm("")
-    const [description, onChangeDescription] = useForm("")
-    const [durationInDays, onChangeDurationInDays] = useForm("")
+    const [country, onChangeCountry] = useForm("")
+    const [age, onChangeAge] = useForm("")
+    const [applicationText, onChangeApplicationText] = useForm("")
+    const [profession, onChangeProfession] = useForm("")
     const history = useHistory()
 
-    const onSubmitForm = (e) => {
-        e.preventDefault()
-    }
+    useEffect(() => {
+        getAllTrips()
+    },[])
 
     const body = {
         name: name,
-        planet: planet,
-        date: date,
-        description: description,
-        durationInDays: durationInDays
+        age: age,
+        applicationText: applicationText,
+        profession: profession,
+        country: country
     }
 
-    axios
-        .post(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/fabiana-pereira-cruz/trips/${id}/apply`, 
-        body
-        )
-        .then((res) => {
-            console.log(res.data)
-            window.localStorage.setItem('token', res.data.token)
-            history.push('/admin/trips/list')  
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+        const getAllTrips = () => {
+            axios
+            .get("https://us-central1-labenu-apis.cloudfunctions.net/labeX/fabiana-pereira-cruz/trips",
+            {
+                headers: {
+                    auth: localStorage.getItem("token")
+                }
+            }
+            )
+            .then((res) => {
+                setListTrips(res.data)
+            })
+            .catch((err) => {
+                console.log(err.res.message)
+            })            
+        }
 
+        const clearFieldForm = () => {
+            setTripId("")
+        }
+
+        const sendApplication = () => {
+            axios
+            .get(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/fabiana-pereira-cruz/trips/${tripId}/apply`,
+            body
+            )
+            .then((res) => {
+                alert("Aplicação enviada com sucesso!")
+                setListTrips(res.data)
+            })
+            .catch((err) => {
+                alert("Ocorreu um erro")
+                console.log(err)
+            })            
+        }
+    
+        const onChangeTrip = (e) => {
+            setTripId(e.target.value)
+        }
+    
+        const onSubmitForm = (e) => {
+            e.preventDefault()
+            sendApplication(tripId, clearFieldForm)
+        }
+
+        const tripOptions = listTrips.trips && listTrips.trips.map((trip) => {
+            return <option key={trip.id} trip={trip}>{trip.name}</option>
+        })
 
     return(
         <div>
             <HeaderContainer>
             LabeX
             </HeaderContainer>
-            <p>Application Form Page</p>
-            <p>Tela de inscrição</p>
-            <p>Escolha sua viagem</p>
-            <form onSubmitForm={onSubmitForm}>
-                <input
-                    type={"text"}
-                    title={"O nome deve ter mais de 2 letras"}
-                    placeholder={"Digite o seu nome"}
-                    value={"nome"}
+            <ApplicationFormParagraph>Tela de inscrição</ApplicationFormParagraph>
+            <FormContainer onSubmitForm={onSubmitForm}>
+                <SelectForm onChange={onChangeTrip}>
+                    {tripOptions}
+                </SelectForm>
+                <InputForm
+                    required
+                    placeholder={"Nome"}
+                    name={"name"}
+                    value={name}
                     onChange={onChangeName}
-                    pattern={"(.*[a-z]){2}"}
-                />
-                <select name="select">
-                    <option value={""}></option>
-                    onChange={onChangePlanet}
-                </select>
-                <input
-                    type={"date"}
-                    title={"O nome deve ter mais de 2 letras"}
-                    placeholder={"Data da viagem"}
-                    value={"date"}
-                    onChange={onChangeDate}
-                    pattern={"(.*[a-z]){2}"}
-                />
-                <input
-                    type={"text"}
-                    title={"A descrição deve ter no mínimo 30 caracteres"}
-                    placeholder={"Digite a descrição"}
-                    value={"descrição"}
-                    onChange={onChangeDescription}
-                    pattern={"(.*[a-z]){2}"}
-                />
-                <input
-                    type={"number"}
-                    title={"O nome deve ter mais de 2 letras"}
-                    placeholder={"Duração da viagem em dias"}
-                    value={"number"}
-                    onChange={onChangeDurationInDays}
-                    pattern={"(.*[a-z]){2}"}
-                />
-                <button>Enviar</button>
-            </form>
+                    title={"O nome deve ter no mínimo 3 caracteres"}
+                    pattern={"^.{3,}$"}
+                    />
+                <InputForm
+                    required
+                    placeholder={"Idade"}
+                    name={"age"}
+                    value={age}
+                    onChange={onChangeAge}
+                    min={18}
+                    />
+                <InputForm
+                    required
+                    placeholder={"Texto para se candidatar"}
+                    name={"applicationText"}
+                    value={applicationText}
+                    onChange={onChangeApplicationText}
+                    title={"O texto deve ter no mínimo 30 caracteres"}
+                    pattern={"^.{30,}$"}
+                    />
+                <InputForm
+                    required
+                    placeholder={"Profissão"}
+                    name={"profession"}
+                    value={profession}
+                    onChange={onChangeProfession}
+                    title={"O texto deve ter no mínimo 10 caracteres"}
+                    pattern={"^.{10,}$"}
+                    />
+                <SelectForm
+                    required
+                    placeholder={"País"}
+                    name={"country"}
+                    value={country}
+                    onChange={onChangeCountry}
+                    >
+                    <option value="" disabled>Escolha um País</option>
+                    {countries.map((country) => {
+                        return <option value={country} key={country}>{country}</option>
+                    })}
+                </SelectForm>
+                <LabeXButton type="submit">Enviar</LabeXButton>
+            </FormContainer>
             <br></br>
             <br></br>
-            <button onClick={() => goToLastPage(history)}>Voltar</button>
-            <button onClick={() => goToHomePage(history)}>Home Page</button>
+            <LabeXButton onClick={() => goToLastPage(history)}>Voltar</LabeXButton>
+            <LabeXButton onClick={() => goToHomePage(history)}>Home Page</LabeXButton>
         </div>
     )
 }

@@ -10,7 +10,7 @@ const useForm = (initialForm) => {
     const resetForm = () => {
         setValue(initialForm)
     }
-    
+
     return [value, onChangeValue, resetForm]
 
 }
