@@ -88,10 +88,6 @@ const AdminLoginParagraph = styled.p`
     color: #db7f32;
     font-weight: bold;
 `
-// const initialForm = {
-//     email: "",
-//     password: ""
-// }
 
 const LoginPage = () => {
     useProtectedPage()
@@ -129,9 +125,6 @@ const LoginPage = () => {
             <TitleContainer>
                 <Title>LabeX</Title>
                 <Phrase1>Viaje com a pioneira em turismo interplanetário</Phrase1>
-                <RocketIcon 
-                src="https://www.flaticon.com/svg/vstatic/svg/1063/1063231.svg?token=exp=1618256284~hmac=b8ee34ff54348ef76725265468411d38" 
-                alt="rocket" />
             </TitleContainer>
         
             <LoginContainer>
@@ -141,9 +134,7 @@ const LoginPage = () => {
                     <InputAdmin 
                     required
                     title={"e-mail incorreto"}
-                    // value={form.email}
                     value={email} 
-                    // onChange={handleEmail} 
                     onChange={onChangeEmail}
                     type={"email"} 
                     placeholder={"Digite seu e-mail"}
@@ -159,7 +150,6 @@ const LoginPage = () => {
                     pattern={"\\w{3,}"}
                     />
                         <div>
-                            {/* <LabeXButton onClick={() => goToAdminHomePage(history)} >Entrar</LabeXButton> */}
                             <LabeXButton onClick={login}>Entrar</LabeXButton>
                             <LabeXButton onClick={() => goToLastPage(history)}>Voltar</LabeXButton>
                         </div>

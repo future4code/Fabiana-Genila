@@ -1,6 +1,8 @@
 import React from "react"
 import { useHistory } from 'react-router-dom'
+import axios from 'axios'
 import { goToTripDetailsPage } from '../../routes/coordinator'
+import ListTripsPage from '../pages/ListTripsPage'
 
 
 const AdminTripCard = (props) => {
@@ -8,9 +10,17 @@ const AdminTripCard = (props) => {
     const history = useHistory()
 
     const deleteTrip = (id, getTrips) => {
-        axios.delete(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/fabiana-pereira-cruz/trips/${id}`, {
-            headers: { auth: localStorage.getItem("token") }
-        })
+
+        const token = window.localStorage.getItem("token")
+
+        axios
+        .delete(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/fabiana-pereira-cruz/trips/${id}`, 
+            {
+                headers: {
+                    auth: token
+                }
+            }
+        )
         .then(() => {
             alert("Viagem deletada!")
             getTrips()

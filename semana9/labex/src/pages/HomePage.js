@@ -92,10 +92,6 @@ const HomePage = () => {
         <TitleContainer>
           <Title>LabeX</Title>
           <Phrase1>Viaje com a pioneira em turismo interplanetário</Phrase1>
-          <RocketIcon
-            src="https://www.flaticon.com/svg/vstatic/svg/1063/1063231.svg?token=exp=1618256284~hmac=b8ee34ff54348ef76725265468411d38"
-            alt="rocket"
-          />
         </TitleContainer>
         <LoginContainer>
           <br></br>

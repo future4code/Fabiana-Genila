@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useHistory, useParams } from 'react-router-dom'
 import axios from 'axios'
@@ -25,10 +25,6 @@ const TripDetailsPage = () => {
     const { id } = useParams()
     const history = useHistory()
 
-    useEffect(() =>{
-        getTripDetail()
-    },[])
-
     const getTripDetail = () => {
         const token = window.localStorage.getItem("token")
 
@@ -41,11 +37,12 @@ const TripDetailsPage = () => {
                 }
             )
             .then((res) => {
+                console.log(res.data)
                 setTripDetails(res.data.trip)
                 history.push('/admin/trips/list')
             })
             .catch((err) => {
-                console.log(err.response.message)
+                console.log(err)
             })
     }
 
@@ -56,7 +53,7 @@ const TripDetailsPage = () => {
 
     const candidates = tripDetails && 
     tripDetails.trip && tripDetails.trip.candidates.map((candidate) => {
-        return <div key={candidate.id}>{candidate}{id}{getTripDetail}</div>
+        return <div key={candidate.id}>{candidate.id}{getTripDetail}</div>
     })
 
     const approvedCandidates = tripDetails && 
@@ -69,14 +66,18 @@ const TripDetailsPage = () => {
             <HeaderContainer>
             LabeX
             </HeaderContainer>
-            {tripDetails && tripDetails.trip && <h1>{tripDetails.trip.name}</h1>}
-            {tripDetails && tripDetails.trip && <div>
+            <div>
+            {tripDetails && tripDetails.trip && 
+            <h1>{tripDetails.trip.name}</h1>}
+            {tripDetails && tripDetails.trip && 
+            <div>
                 <p><b>Nome:</b> {tripDetails.trip.name}</p>
                 <p><b>Descrição:</b> {tripDetails.trip.description}</p>
                 <p><b>Planeta:</b> {tripDetails.trip.planet}</p>
                 <p><b>Duração:</b> {tripDetails.trip.durationInDays}</p>
                 <p><b>Data:</b> {tripDetails.trip.date}</p>
             </div>}
+            </div>
             <button onClick={() => goToLastPage(history)}>Voltar</button>
             <button onClick={logout}>Logout</button>
 

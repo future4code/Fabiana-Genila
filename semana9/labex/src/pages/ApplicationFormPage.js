@@ -71,14 +71,6 @@ const ApplicationFormPage = () => {
         getAllTrips()
     },[])
 
-    const body = {
-        name: name,
-        age: age,
-        applicationText: applicationText,
-        profession: profession,
-        country: country
-    }
-
         const getAllTrips = () => {
             axios
             .get("https://us-central1-labenu-apis.cloudfunctions.net/labeX/fabiana-pereira-cruz/trips",
@@ -100,14 +92,25 @@ const ApplicationFormPage = () => {
             setTripId("")
         }
 
-        const sendApplication = () => {
+        const sendApplication = (tripId) => {
+
+            const body = {
+                name: name,
+                age: age,
+                applicationText: applicationText,
+                profession: profession,
+                country: country
+            }
+            
             axios
             .get(`https://us-central1-labenu-apis.cloudfunctions.net/labeX/fabiana-pereira-cruz/trips/${tripId}/apply`,
             body
             )
             .then((res) => {
+                console.log(res.data)
                 alert("Aplicação enviada com sucesso!")
                 setListTrips(res.data)
+                
             })
             .catch((err) => {
                 alert("Ocorreu um erro")
@@ -121,11 +124,11 @@ const ApplicationFormPage = () => {
     
         const onSubmitForm = (e) => {
             e.preventDefault()
-            sendApplication(tripId, clearFieldForm)
+            sendApplication(tripId)
         }
 
         const tripOptions = listTrips.trips && listTrips.trips.map((trip) => {
-            return <option key={trip.id} trip={trip}>{trip.name}</option>
+            return <option key={trip.id}>{trip.name}</option>
         })
 
     return(
@@ -134,7 +137,7 @@ const ApplicationFormPage = () => {
             LabeX
             </HeaderContainer>
             <ApplicationFormParagraph>Tela de inscrição</ApplicationFormParagraph>
-            <FormContainer onSubmitForm={onSubmitForm}>
+            <FormContainer SubmitForm={onSubmitForm}>
                 <SelectForm onChange={onChangeTrip}>
                     {tripOptions}
                 </SelectForm>
