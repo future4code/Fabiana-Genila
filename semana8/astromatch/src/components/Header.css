@@ -1,0 +1,21 @@
+.Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: flex-start;
+    padding-bottom: 10px;
+}
+
+.Title .MuiIconButton-root {
+    background-color: white;
+}
+
+.Astro-title {
+    color: firebrick;
+    font-weight: bolder;
+    letter-spacing: 0.5px;
+    font-size: 25px;
+    font-family: monospace;
+    text-shadow: 2px 2px 4px lightcoral;
+    text-decoration: none;
+}

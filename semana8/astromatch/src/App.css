@@ -1,0 +1,22 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.App {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px;
+  background-color: lightcyan;
+  border: 1px solid gray;
+}
+
+.App-Container {
+  align-items: center;
+  justify-content: center;
+  padding: 0 40px;
+  background-color: #fafafa;
+  border: 1px solid gray;
+  border-radius: 10px;
+}
