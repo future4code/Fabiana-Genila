@@ -1,6 +1,8 @@
 import React from 'react'
+import useProtectedPage from '../../hooks/useProtectedPage'
 
 const PostsPage = () => {
+    useProtectedPage()
     return (
         <div>
             <h1>POSTS</h1>
