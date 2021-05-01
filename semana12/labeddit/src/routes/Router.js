@@ -18,7 +18,7 @@ const Router = ({setRightButtonText}) => {
                 <Route exact path="/feed">
                     <FeedPage />
                 </Route>
-                <Route exact path="comments/:postId">
+                <Route exact path="/posts/:postId">
                     <PostsPage />
                 </Route>
                 <Route>

@@ -5,7 +5,11 @@ export const FeedListContainer = styled.div`
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    margin: 30px;
+    align-items: center;
+    margin: 5px;
+    background-color: #fef4f0;
+
+    
 `
 
 export const AddPostButton = styled.div`

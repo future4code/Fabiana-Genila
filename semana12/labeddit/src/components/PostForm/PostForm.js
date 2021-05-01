@@ -4,7 +4,7 @@ import CommentIcon from '@material-ui/icons/Comment'
 import React from 'react'
 import useForm from '../../hooks/useForm'
 import { InputsContainer, PostTitle } from './styled'
-import { useHistory } from 'react-router'
+import { useHistory, useParams } from 'react-router'
 import { createPost } from '../../services/posts'
 
 const useStyles = makeStyles((theme) => ({
@@ -13,9 +13,10 @@ const useStyles = makeStyles((theme) => ({
       margin: 30,
       padding: 20,
       backgroundColor: '#fcecdc',
+      borderRadius: 20,
     },
     input: {
-        backgroundColor: 'white',
+        backgroundColor: '#ffffff',
     },
     commentIcon: {
         fontSize: 40,
@@ -27,11 +28,12 @@ const PostForm = () => {
     const classes = useStyles();
     const [form, onChange, clear] = useForm({text: "", title: ""})
     const history = useHistory()
+    const params = useParams()
 
     const onSubmitForm = (event) => {
         event.preventDefault()
         console.log(form)
-        createPost(form, clear, history)
+        createPost(form, clear, history, params.postId)
         
     }
 
@@ -43,7 +45,7 @@ const PostForm = () => {
         className={classes.commentIcon}
         >
         </CommentIcon>
-        <PostTitle>Posts</PostTitle>   
+        <PostTitle></PostTitle>   
         <form onSubmit={onSubmitForm}>
             <TextField
                 className={classes.input}

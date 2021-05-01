@@ -21,3 +21,18 @@ export const CommentsContainer = styled.div`
     justify-content: space-between;
     align-items: center;
 `
+
+export const CommentsDiv = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+`
+
+export const ArrowContainer = styled.div`
+    display: flex;
+    flex-direction: row; 
+`
+export const CommentCountDiv = styled.div`
+    text-align: right;
+`

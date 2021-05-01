@@ -1,10 +1,5 @@
-import React from 'react';
-import useRequestData from '../../hooks/useRequestData'
+import React from 'react'
 import axios from 'axios'
-import { useParams } from 'react-router'
-import { BASE_URL } from '../../constants/url'
-import useProtectedPage from '../../hooks/useProtectedPage'
-import { CommentsContainer, CommentsDiv, ArrowContainer } from './styled'
 import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
@@ -16,15 +11,18 @@ import { CardActionArea } from '@material-ui/core'
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
 import { IconButton } from '@material-ui/core'
+import { useParams } from 'react-router'
+import { BASE_URL } from '../../constants/url'
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: 1200,
+    width: 500,
     margin: 15,
     fontSize: 34,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#ffffff',
     borderRadius: 20
   },
   media: {
@@ -38,20 +36,17 @@ const useStyles = makeStyles((theme) => ({
     padding: 10,
     textAlign: 'left',
   }
-}));
+}))
 
-const FeedCard = (props) => {
-  useProtectedPage()
+const CommentCard = (props) => {
   const classes = useStyles()
   const params = useParams()
-  const feed = useRequestData({}, `${BASE_URL}/posts/${params.postId}`)
-  console.log(feed)
 
   const voteUp = () => {
-    const body = {  
+    const body ={
       direction: 1
     }
-    axios.put(`${BASE_URL}/posts/${props.postId}/vote`, body, {
+    axios.put(`${BASE_URL}/posts/${params.postId}/comment/${props.commentId}/vote`, body, {
         headers: {
             Authorization: localStorage.getItem("token")
         }
@@ -59,15 +54,15 @@ const FeedCard = (props) => {
     .then((res) => {
         alert("Voto efetuado com sucesso!")
     })
-    .catch((err) => alert("Ocorreu um erro, tente novamente"))
+    .catch((err) => alert(err))
 }
 
 
 const voteDown = () => {
-  const body = {
+  const body ={
     direction: -1
   }
-  axios.put(`${BASE_URL}/posts/${props.postId}/vote`, body, {
+  axios.put(`${BASE_URL}/posts/${params.postId}/comment/${props.commentId}/vote`, body, {
       headers: {
           Authorization: localStorage.getItem("token")
       }
@@ -75,18 +70,19 @@ const voteDown = () => {
   .then((res) => {
       alert("Voto efetuado com sucesso!")
   })
-  .catch((err) => alert("Ocorreu um erro, tente novamente"))
+  .catch((err) => alert(err))
 }   
 
   return (
     <>
-    <Card className={classes.root} variant="outlined" onClick={props.onClick}>
+    <Card className={classes.root} variant="outlined">
       <CardActionArea className={classes.paragraph}>
       <CardHeader
         avatar={
           <Avatar
             aria-label="posts"
             className={classes.avatar}
+            username={props.username}
           ></Avatar>
         }
         title={props.title}
@@ -94,37 +90,32 @@ const voteDown = () => {
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-        {props.text}
+          {props.text}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
 
-        <CommentsContainer>
+        <div>
           <Typography variant="paragraph" color="textSecondary">
-            <CommentsDiv>
-              <ArrowContainer>
-              <Typography variant="paragraph" color="textSecondary">
-                <p>
+            <div>
+            <p>
                 Votos:
                 <IconButton>
-                <ArrowUpwardIcon onClick={() => voteUp(params.postId)}> + </ArrowUpwardIcon>{" "}
+                <ArrowUpwardIcon onClick={() => voteUp(params.postId, props.commentId)}> + </ArrowUpwardIcon>{" "}
                 </IconButton>
-                {feed.post && feed.post.votes}
+                {props.votes}
                 <IconButton>
-                <ArrowDownwardIcon onClick={() => voteDown(params.postId)}> - </ArrowDownwardIcon>
+                <ArrowDownwardIcon onClick={() => voteDown(params.postId, params.commentId)}> - </ArrowDownwardIcon>
                 </IconButton>
               </p>
-              </Typography>
-            </ArrowContainer>
-              <p>Comentários: {props.comments}</p>
-              </CommentsDiv>
+              </div>
           </Typography>
-        </CommentsContainer>
+        </div>
 
       </CardActions>
       </CardActionArea>
     </Card>
     </>
-  );
+  )
 }
-export default FeedCard
+export default CommentCard
