@@ -6,10 +6,10 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import { IconButton } from '@material-ui/core'
 
-//APAGAR
+//APAGAR CONSOLE.LOG
 const VoteComment = (props) => {
     const params = useParams()
-    console.log(params.commentId) 
+    console.log(params) 
 
 
     const voteUp = (postId, commentId, clear, props) => {
@@ -34,7 +34,7 @@ const VoteComment = (props) => {
     const body ={
       direction: -1
     }
-    axios.put(`${BASE_URL}/posts/${params.postId}/comment/${params.commentId}/vote`, body, {
+    axios.put(`${BASE_URL}/posts/${params.postId}/comment/${props.commentId}/vote`, body, {
         headers: {
             Authorization: localStorage.getItem("token")
         }

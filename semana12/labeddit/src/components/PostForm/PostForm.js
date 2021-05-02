@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import CommentIcon from '@material-ui/icons/Comment'
 import React from 'react'
 import useForm from '../../hooks/useForm'
-import { InputsContainer, PostTitle } from './styled'
+import { InputsContainer } from './styled'
 import { useHistory, useParams } from 'react-router'
 import { createPost } from '../../services/posts'
 
@@ -29,6 +29,7 @@ const PostForm = () => {
     const [form, onChange, clear] = useForm({text: "", title: ""})
     const history = useHistory()
     const params = useParams()
+    console.log(params)
 
     const onSubmitForm = (event) => {
         event.preventDefault()
@@ -45,7 +46,6 @@ const PostForm = () => {
         className={classes.commentIcon}
         >
         </CommentIcon>
-        <PostTitle></PostTitle>   
         <form onSubmit={onSubmitForm}>
             <TextField
                 className={classes.input}

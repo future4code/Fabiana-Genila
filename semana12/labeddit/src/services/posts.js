@@ -9,10 +9,10 @@ export const createPost = (body, clear) => {
         }
     })
     .then((res) => {
-        alert(res.message)
+        alert("Post efetuado com sucesso.")
         clear()
     })
-    .catch((err) => alert(err.response.message))
+    .catch((err) => alert("Ocorreu um erro, tente novamente"))
 }
 
 export const getPost = (body, clear, history) => {

@@ -13,8 +13,7 @@ import CardActions from '@material-ui/core/CardActions'
 import Avatar from '@material-ui/core/Avatar'
 import Typography from '@material-ui/core/Typography'
 import { CardActionArea } from '@material-ui/core'
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward'
+import HowToVoteIcon from '@material-ui/icons/HowToVote';
 import { IconButton } from '@material-ui/core'
 
 
@@ -40,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const FeedCard = (props) => {
+const Feed = (props) => {
   useProtectedPage()
   const classes = useStyles()
   const params = useParams()
@@ -51,7 +50,7 @@ const FeedCard = (props) => {
     const body = {  
       direction: 1
     }
-    axios.put(`${BASE_URL}/posts/${props.postId}/vote`, body, {
+    axios.put(`${BASE_URL}/posts/${params.postId}/vote`, body, {
         headers: {
             Authorization: localStorage.getItem("token")
         }
@@ -67,7 +66,7 @@ const voteDown = () => {
   const body = {
     direction: -1
   }
-  axios.put(`${BASE_URL}/posts/${props.postId}/vote`, body, {
+  axios.put(`${BASE_URL}/posts/${params.postId}/vote`, body, {
       headers: {
           Authorization: localStorage.getItem("token")
       }
@@ -104,16 +103,23 @@ const voteDown = () => {
             <CommentsDiv>
               <ArrowContainer>
               <Typography variant="paragraph" color="textSecondary">
-                <p>
-                Votos:
+              <p>
+                Votos: 
+                {props.votes}
                 <IconButton>
-                <ArrowUpwardIcon onClick={() => voteUp(params.postId)}> + </ArrowUpwardIcon>{" "}
-                </IconButton>
-                {feed.post && feed.post.votes}
-                <IconButton>
-                <ArrowDownwardIcon onClick={() => voteDown(params.postId)}> - </ArrowDownwardIcon>
+                <HowToVoteIcon> - </HowToVoteIcon>
                 </IconButton>
               </p>
+                {/* <p>
+                Votos:
+                <IconButton>
+                <ArrowUpwardIcon onClick={() => voteUp(props.postId)}> + </ArrowUpwardIcon>{" "}
+                </IconButton>
+                {props.votes}
+                <IconButton>
+                <ArrowDownwardIcon onClick={() => voteDown(props.postId)}> - </ArrowDownwardIcon>
+                </IconButton>
+              </p> */}
               </Typography>
             </ArrowContainer>
               <p>Comentários: {props.comments}</p>
@@ -127,4 +133,4 @@ const voteDown = () => {
     </>
   );
 }
-export default FeedCard
+export default Feed
