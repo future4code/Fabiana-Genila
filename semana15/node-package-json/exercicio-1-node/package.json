@@ -1,0 +1,19 @@
+{
+  "name": "exercicio-1",
+  "version": "1.0.0",
+  "description": "resolução do exercício 1 de node e package-json ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./index.js"
+  },
+  "keywords": [
+    "node",
+    "package"
+  ],
+  "author": "Fabiana Genila",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^4.2.4"
+  }
+}

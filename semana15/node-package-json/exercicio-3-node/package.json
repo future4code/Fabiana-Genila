@@ -1,0 +1,15 @@
+{
+  "name": "exercicio-3-node",
+  "version": "1.0.0",
+  "description": "resolução do exercicio 3 de node e package-json",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./index.js"
+  },
+  "keywords": [
+    "node",
+    "package"
+  ],
+  "author": "Fabiana Genila",
+  "license": "ISC"
+}

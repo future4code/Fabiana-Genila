@@ -1,0 +1,11 @@
+{
+  "name": "exercicio-2-node",
+  "version": "1.0.0",
+  "description": "resolução do exercicio 2 de node e package-json",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./index.js"
+  },
+  "author": "Fabiana Genila",
+  "license": "ISC"
+}
