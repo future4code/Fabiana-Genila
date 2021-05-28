@@ -1,0 +1,12 @@
+GET http://localhost:3003
+
+################################
+
+PUT http://localhost:3003/user
+Content-Type: application/json
+
+{
+    "name": "Luzia",
+    "nickname": "Lu",
+    "email": "luzia@gmail.com"
+}
