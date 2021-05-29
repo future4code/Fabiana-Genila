@@ -11,10 +11,34 @@ app.use(cors());
 type User = {
     name: string,
     nickname: string,
-    email: string
+    email: string 
 }
 
 let users: User[] = []
+
+type Task = {
+    title: string,
+    description: string,
+    limit_date: string,
+    creatorUserId: number
+}
+
+type All = {
+    name: string,
+    nickname: string,
+    email: string,
+    title: string,
+    description: string,
+    limit_date: string,
+    creatorUserId: number,
+    status: string,
+    creator_user_id: string,
+    limitDate: string
+}
+
+interface Date {
+    toLocaleDateString(): string
+}
 
 
 app.put('/todolist/users/:id', async (req, res) => {
@@ -40,77 +64,212 @@ app.put('/todolist/users/:id', async (req, res) => {
 });
 
 
-app.get('/', async (req, res) => {
+app.get('/user', async (req, res) => {
     try { 
 
-        await connection.raw(`
-        SELECT * FROM TodoListUser;
-        `);
+        const result = await connection("TodoListUser");
 
-        res.status(200).send("success")
+        res.status(200).send(result)
     } catch (error) {
+        console.log(error)
         res.status(400).send({
             error: error.mysqlMessage
         })
     }
 });
 
-app.post('/', async (req, res) => {
-    try { 
-
-
-        res.status(200).send({})
-    } catch (error) {
-        res.status(400).send({})
-    }
-});
-
 //Criar usuário 
-app.put('/userss', async (req, res) => {
-    try {
-
-        await connection("ToDoList")
-        .update({ 
-            name: req.body.name,
-            nickname: req.body.nickname,
-            email: req.body.email
-        })
-        
-        res.status(200).send("User created!")
-
-    } catch (error) {
-        console.log(error.mysqlMessage)
-        res.status(400).send({
-            err: error.mysqlMessage
-        })
-    }
-});
-
 app.put('/user', async (req: Request, res: Response) => {
     try {
 
-        if(!req.body.name) {
-            throw new Error("'name' is required")
+        if(!req.body.name || !req.body.nickname || !req.body.email) {
+            throw new Error("Empty fields are not allowed. Please fill the information accordingly.")
         }
 
-        await connection.raw(`
-            INSERT INTO ToDoListUser (name, nickname, email)
-            VALUES (
-                "${req.body.name}",
-                "${req.body.nickname}",
-                "${req.body.email}"
-            )
-        `)
+        const newUser = {
+            name: req.body.name,
+            nickname: req.body.nickname,
+            email: req.body.email
+        }
 
-        res.status(200).send("User created!")
+        await connection("TodoListUser")
+        .insert(newUser)
+
+        res.status(201).send({
+            message: "User created!",
+            newUser: newUser
+        })
 
     } catch (error) {
-        console.log(error.mysqlMessage)
+        console.log(error)
         res.status(400).send({
             err: error.mysqlMessage
         })
     }
 });
+
+//Pegar usuário pelo id
+app.get('/user/:id', async (req, res) => {
+    try { 
+        const name = req.body.name as string;
+        const id = Number(req.params.id);
+
+        if(isNaN(id)) {
+            throw new Error("ID is required")
+        }
+
+        const userById = await connection("TodoListUser")
+        .where({id: req.params.id})
+
+        const result = userById.map(user => {
+            return {id: req.params.id, name: user.name}
+        })
+
+        if(!result.length) {
+            throw new Error("User not found")
+        }
+
+        res.status(200).send(result)
+    } catch (error) {
+        console.log(error)
+        res.status(400).send({
+            error: error.mysqlMessage
+        })
+    }
+});
+
+//Editar usuário
+app.post('/user/edit/:id', async (req, res) => {
+    try { 
+        const name = req.body.name as string;
+        const nickname = req.body.nickname as string;
+        const id = Number(req.params.id);
+
+        if(isNaN(id)) {
+            throw new Error("ID is required")
+        }
+
+        if(!req.body.name || !req.body.nickname) {
+            throw new Error("Empty fields are not allowed. Please fill the information accordingly.")
+        }
+
+        const newUser = {
+            name: req.body.name,
+            nickname: req.body.nickname
+        }
+
+        if(req.body.email){
+            throw new Error("email is not required")
+        }
+
+        const insertUser = await connection("TodoListUser")
+        .update(newUser)
+        .from("TodoListUser")
+        .where({id: req.params.id})
+
+        
+        const userById = await connection("TodoListUser")
+        .where({id: req.params.id})
+
+        const result = userById.map(user => {
+            return {id: user.id, name: user.name, nickname: user.nickname}
+        })
+
+        if(!result.length) {
+            throw new Error("User not found")
+        }
+
+        res.status(200).send(result)
+        console.log(insertUser)
+    } catch (error) {
+        console.log(error)
+        res.status(400).send({
+            error: error.message
+        })
+    }
+});
+
+//Criar tarefa 
+app.put('/task', async (req: Request, res: Response) => {
+    try {
+
+        if(!req.body.title || !req.body.description || !req.body.limit_date || !req.body.creatorUserId) {
+            throw new Error("Empty fields are not allowed. Please fill the information accordingly.")
+        }
+
+        const newTask = {
+            title: req.body.title,
+            description: req.body.description,
+            limit_date: req.body.limit_date,
+            creator_user_id: req.body.creatorUserId
+        }
+
+        await connection("TodoListTask")
+        .insert(newTask)
+
+        const formatDate = await connection.raw(`
+        SELECT*,
+        DATE_FORMAT (limit_date, "%d/%m/%Y")
+        AS limitDate FROM TodoListTask;
+        `)
+
+        res.status(201).send({
+            message: "Task created!",
+            newUser: formatDate
+        })
+
+    } catch (error) {
+        console.log(error)
+        res.status(400).send({
+            err: error.message
+        })
+    }
+});
+
+//Pegar tarefa pelo id
+app.get('/task/:id', async (req, res) => {
+    try { 
+        const id = Number(req.params.id);
+
+        if(isNaN(id)) {
+            throw new Error("ID is required")
+        }
+
+        const taskById = await connection("TodoListUser")
+        .where({id: req.params.id})
+
+        const [allInfo] = await connection.raw(`
+        SELECT * 
+        FROM TodoListTask
+        JOIN TodoListUser
+        ON TodoListTask.id = TodoListUser.id;
+        `);
+
+        const result = allInfo.map((task:All) => {
+            return {
+                id: req.params.id, 
+                title: task.title,
+                description: task.description,
+                limitDate: task.limit_date,
+                status: task.status,
+                creatorUserId: task.creator_user_id,
+                creatorUserNickname: task.nickname
+            }
+        })
+
+        if(!result.length) {
+            throw new Error("Task not found")
+        }
+
+        res.status(200).send(result)
+    } catch (error) {
+        console.log(error)
+        res.status(400).send({
+            error: error.message
+        })
+    }
+});
+
 
 
 const server = app.listen(process.env.PORT || 3003, () => {
