@@ -40,30 +40,7 @@ interface Date {
     toLocaleDateString(): string
 }
 
-
-app.put('/todolist/users/:id', async (req, res) => {
-    try {
-
-        await connection("toDoList")
-        .update({ 
-            name: req.body.name,
-            salary: req.body.salary,
-            gender: req.body.gender
-        })
-        .where({ id: req.params.id })
-        
-        res.status(200).send()
-
-    } catch (error) {
-        console.log(error.mysqlMessage)
-        res.status(400).send({
-            err: error.mysqlMessage
-        })
-    }
-    
-});
-
-
+//All users
 app.get('/user', async (req, res) => {
     try { 
 
@@ -207,7 +184,7 @@ app.put('/task', async (req: Request, res: Response) => {
         await connection("TodoListTask")
         .insert(newTask)
 
-        const formatDate = await connection.raw(`
+        const formatDateTask = await connection.raw(`
         SELECT*,
         DATE_FORMAT (limit_date, "%d/%m/%Y")
         AS limitDate FROM TodoListTask;
@@ -215,7 +192,7 @@ app.put('/task', async (req: Request, res: Response) => {
 
         res.status(201).send({
             message: "Task created!",
-            newUser: formatDate
+            newUser: formatDateTask[0]
         })
 
     } catch (error) {
@@ -239,18 +216,20 @@ app.get('/task/:id', async (req, res) => {
         .where({id: req.params.id})
 
         const [allInfo] = await connection.raw(`
-        SELECT * 
-        FROM TodoListTask
+        SELECT *,
+        DATE_FORMAT (limit_date, "%d/%m/%Y")
+        AS limitDate FROM TodoListTask
         JOIN TodoListUser
         ON TodoListTask.id = TodoListUser.id;
         `);
+
 
         const result = allInfo.map((task:All) => {
             return {
                 id: req.params.id, 
                 title: task.title,
                 description: task.description,
-                limitDate: task.limit_date,
+                limitDate: task.limitDate,
                 status: task.status,
                 creatorUserId: task.creator_user_id,
                 creatorUserNickname: task.nickname
@@ -269,8 +248,6 @@ app.get('/task/:id', async (req, res) => {
         })
     }
 });
-
-
 
 const server = app.listen(process.env.PORT || 3003, () => {
     if(server) {
