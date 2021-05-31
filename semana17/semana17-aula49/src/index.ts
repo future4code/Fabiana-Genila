@@ -22,81 +22,71 @@ const app: Express = express()
 app.use(express.json())
 app.use(cors())
 
-// //search recipes (FILTRO, ORDENAÇÃO e PAGINAÇÃO)
-// app.get("/recipes/all", async function (
-//    req: Request,
-//    res: Response
-// ): Promise<void> {
-//    try {
-//       const result = await connection.raw(`
-//          SELECT title, name AS "author", description
-//          FROM recipes_aula48
-//          JOIN users_aula48 
-//          ON user_id = users_aula48.id;
-//       `)
+//Exercicio 4
+app.get('/teachers', async (req: Request, res: Response) => {
+   try {
+      const page = Number(req.query.page) || 1
+      const name = req.query.name as string
+      const type = req.query.type as string
+      const orderBy = req.query.orderBy as string || 'type' || 'name'
+      const orderType = req.query.orderType as string || 'DESC'
 
-//       const teachers: teacher[] = result[0]
+      const [result] = await connection.raw(`
+         SELECT *
+         FROM aula48_exercicio
+         WHERE name LIKE '%${name}%' AND type LIKE '%${type}%'
+         ORDER BY ${orderBy} ${orderType.toUpperCase()}
+         LIMIT 5
+         OFFSET ${5 * (page - 1)};
+      `)
 
-//       if(!teachers.length){
-//          res.statusCode = 404
-//          throw new Error("No recipes found")
-//       }
+      const teachers: teacher[] = result
 
-//       res.status(200).send()
-      
-//    } catch (error) {
-//       console.log(error)
-//       res.send(error.message || error.sqlMessage)
-//    }
-// })
+      if(!teachers.length){
+         res.statusCode = 400
+         throw new Error("No teacher found")
+      }
 
-// app.get('/recipes/search', async (req: Request, res: Response) => {
-//    try {
+      res.status(200).send({
+         page,
+         teachers
+      })
 
-//       const title = req.query.title as string
-//       const orderBy = req.query.orderBy as string || "title"
-//       const orderType = req.query.orderType as string || "ASC"
-//       const page = Number(req.query.page) || 1
+   }  catch (error) {
+      console.log(error)
+      res.send(error.message || error.sqlMessage)
+   }
+})
 
-//       if(!title || !orderBy || !orderType) {
-//          res.statusCode = 400
-//          throw new Error("Missing one or more queries: 'title' or 'orderBy' or 'orderType'")
-//       }
+//Paginação 5 users
+app.get('/teachers/pages', async (req: Request, res: Response) => {
+   try {
+      const page = Number(req.query.page) || 1
 
-//       // //query builds
-//       // const recipes: recipe[] = await connection('recipes_aula48')
-//       // .select('title', 'name AS author', 'description')
-//       // .join('users_aula48', 'user_id', '=', 'users_aula48.id')
-//       // .where('title', 'like', `%${title}%`)
-//       // .orderBy(orderBy, orderType)
+      const result = await connection.raw(`
+         SELECT *
+         FROM aula48_exercicio
+         LIMIT 5
+         OFFSET ${5 * (page - 1)};
+      `)
 
-//       const result = await connection.raw(`
-//          SELECT title, name AS "author", description
-//          FROM recipes_aula48
-//          JOIN users_aula48 
-//          ON user_id = users_aula48.id
-//          WHERE title LIKE '%${title}%'
-//          ORDER BY ${orderBy} ${orderType.toUpperCase()}
-//          LIMIT 5
-//          OFFSET ${5 * (page - 1)};
-//       `)
+      const teachers: teacher[] = result[0]
 
-//       const teachers: teacher[] = result[0]
+      if(!teachers.length){
+         res.statusCode = 404
+         throw new Error("No teacher found")
+      }
 
-//       if(!teachers.length){
-//          res.statusCode = 404
-//          throw new Error("No teacher found")
-//       }
+      res.status(200).send({
+         page,
+         teachers
+      })
 
-//       res.status(200).send({
-//          teachers
-//       })
-
-//    }  catch (error) {
-//       console.log(error)
-//       res.send(error.message || error.sqlMessage)
-//    }
-// })
+   }  catch (error) {
+      console.log(error)
+      res.send(error.message || error.sqlMessage)
+   }
+})
 
 //Filtragem por nome
 app.get('/teachers/search', async (req: Request, res: Response) => {
@@ -174,16 +164,21 @@ app.get('/teachers/search/ordered', async (req: Request, res: Response) => {
       const orderType = req.query.orderType as string || 'ASC'
       const orderBy = req.query.orderBy as string || 'name' || 'type'
 
-      const result = await connection.raw(`
+      const [result] = await connection.raw(`
          SELECT name, type, email
          FROM aula48_exercicio
          WHERE name LIKE '%${name}%' AND type LIKE '%${type}%'
          ORDER BY ${orderBy} ${orderType};
       `)
 
+      if(!result.length){
+         res.statusCode = 400
+         throw new Error("Nothing found")
+      }
+
       if(!req.query.name || !req.query.type) {
-         const filtered = result.map((teacher: { email: any }) => 
-            teacher.email,
+         const filtered = result.map((teacher: teacher) => 
+            teacher.email
          )
          console.log(filtered)
          res.status(201).send(filtered)
@@ -192,10 +187,10 @@ app.get('/teachers/search/ordered', async (req: Request, res: Response) => {
          throw new Error("Something is wrong")
       }
 
-      const teachers: teacher[] = result[0]
+      const teachers: teacher[] = result
 
       if(!teachers.length){
-         res.statusCode = 404
+         res.statusCode = 400
          throw new Error("No teacher found")
       }
 
@@ -208,6 +203,8 @@ app.get('/teachers/search/ordered', async (req: Request, res: Response) => {
       res.send(error.message || error.sqlMessage)
    }
 })
+
+
 
 const server = app.listen(process.env.PORT || 3003, () => {
    if (server) {
