@@ -1,0 +1,38 @@
+GET http://localhost:3003/user
+
+################################
+
+PUT http://localhost:3003/user
+Content-Type: application/json
+
+{
+    "name": "Astrodev",
+    "nickname": "astrodev",
+    "email": "astrodev@gmail.com"
+}
+
+################################
+GET http://localhost:3003/user/10
+
+################################
+POST http://localhost:3003/user/edit/2
+Content-Type: application/json
+
+{
+    "name": "Astro dev",
+    "nickname": "astrodev 1"
+}
+
+################################
+PUT http://localhost:3003/task
+Content-Type: application/json
+
+{
+	"title": "Criar banco dos alunos",
+	"description": "Devemos criar o banco dos alunos para o módulo do backend",
+	"limit_date": "2020/05/04",
+    "creatorUserId": "001"
+}
+
+###############################
+GET http://localhost:3003/task/1
