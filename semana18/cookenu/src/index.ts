@@ -21,7 +21,7 @@ app.get('/recipe/:id', getRecipeById);
 app.get('/user/:id', getUserById);
 app.get('/user/profile', getSelfId);
 
-app.delete('/user/recipe', deleteRecipe);
+app.delete('/user/recipe/:id', deleteRecipe);
 
 
 // getAddressInfo("05424150").then(console.log);

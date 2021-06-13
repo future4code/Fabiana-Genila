@@ -39,8 +39,6 @@ export default async function editRecipe(
         WHERE user_id = '${user_id}' AND id = '${id}'; 
       `);
 
-         console.log(result)
-
       res.status(202).send("Receita editada com sucesso")
 
    } catch (error) {

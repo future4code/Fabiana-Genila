@@ -24,7 +24,7 @@ export type cookenuRecipe = {
    description: string
    created_at?: string
    createdAt?: string
-   user_id: string
+   user_id?: string
 }
 
 export type usersRecipe = {

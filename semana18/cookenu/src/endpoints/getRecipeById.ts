@@ -31,8 +31,6 @@ export default async function getRecipeById(
           }
       });
 
-      console.log(resultRecipeList)
-
       res.status(200).send({ 
         resultRecipeList
          });

@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import connection from "../connection";
 import { cookenuRecipe, cookenuUser } from "../types";
 import { generateId } from "../services/idGenerator";
+import { authenticationData, getTokenData } from "../services/authenticator";
 
 export default async function createRecipe(
    req: Request,
@@ -9,8 +10,8 @@ export default async function createRecipe(
 ): Promise<void> {
    try {
 
-      const { title, description} = req.body;
-
+      const { title, description } = req.body;
+      const tokenData = getTokenData(req.headers.authorization!);
       const id: string = generateId();
 
       if (!title || !description) {
@@ -26,11 +27,14 @@ export default async function createRecipe(
       throw new Error('Receita já cadastrada')
    };
 
-      const userIdResult: cookenuUser[] = await connection('cookenu_users');
+      const userIdResult: cookenuUser[] = await connection('cookenu_users')
+      .where({id: tokenData.id});
+
 
       const mappedUserId = userIdResult.map(user => {
-         return user.id
-      });
+            return user.id
+         }
+      );
 
       const user_id: any = mappedUserId;
 
@@ -44,14 +48,8 @@ export default async function createRecipe(
       await connection('cookenu_recipes')
       .insert(newRecipe);
 
-      // const recipeResult = newRecipe.map((result: any) => {
-      //    return {
-      //       title: result.title,
-      //       description: result.description
-      //    }
-      // });
-
       res.status(201).send({ 
+         message: "Receita criada com sucesso!",
          newRecipe
          });
 
