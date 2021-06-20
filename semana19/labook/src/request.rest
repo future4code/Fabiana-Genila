@@ -1,0 +1,31 @@
+POST http://localhost:3003/user/signup
+Content-Type: application/json
+
+{
+    "name": "Name Example",
+    "email": "user@example.com",
+    "password": "password"
+}
+
+#### 
+POST http://localhost:3003/user/login/
+Content-Type: application/json
+
+{ 
+    "email": "user@example.com",
+     "password": "password"
+}
+
+###
+POST http://localhost:3003/post
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkMTQ0YzkyLTVjNjQtNDcxZC1hNTUwLTJlYTY2MTRjMTRlMSIsImlhdCI6MTYyNDE0NzE3NCwiZXhwIjoxNjI0MTQ4NjE0fQ.Jh5MZU_kWhAVnY6ncDSztVdin3yDpR82GAj36S-wiBA
+
+{
+    "photo": "https://teste/teste",
+    "description": "Teste descrição2",
+    "type": "event"
+}
+
+####
+GET http://localhost:3003/post/1e24943e-b352-4679-9d1b-f841a10b62b7
